@@ -25,11 +25,11 @@ export const fonts = {
 export const colors = {
     one: 'PaleTurquoise',
     two: 'salmon',
-    white: '#F7FEFF',
     three: 'lightskyblue',
     four: '#DBF3FF',
     five: 'khaki',
-    six: 'mediumturquoise'
+    six: 'mediumturquoise',
+    white: '#F7FEFF',
 }
 
 export const borders = {

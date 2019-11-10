@@ -5,11 +5,15 @@ import logo from './logo.svg';
 import './App.css';
 import characterRoutes from 'src/bundles/character/routes';
 import charactersRoutes from 'src/bundles/characters/routes';
+import joustRoutes from 'src/bundles/joust/routes';
+import gearRoutes from 'src/bundles/gear/routes';
 
 
 const routes = [
   ...characterRoutes,
-  ...charactersRoutes
+  ...charactersRoutes,
+  ...gearRoutes,
+  ...joustRoutes
 ]
 
 function App() {
