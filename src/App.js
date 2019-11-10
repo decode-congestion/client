@@ -8,12 +8,13 @@ import characterRoutes from 'src/bundles/character/routes';
 import charactersRoutes from 'src/bundles/characters/routes';
 import joustRoutes from 'src/bundles/joust/routes';
 import gearRoutes from 'src/bundles/gear/routes';
+import gameRoutes from 'src/bundles/pickgame/routes';
 
 
 const routes = [
   ...characterRoutes,
   ...charactersRoutes,
-  ...gearRoutes,
+  ...gameRoutes,
   ...joustRoutes
 ]
 

@@ -10,27 +10,27 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   background-color: white;
+  padding-bottom: 10vh;
 `;
 const randColors = Object.values(colors);
 
 const index = (props) => {
   const characters = props.characters.map((character) => {
-    const test = {
-      id: 1,
-      name: 'name',
-      helmet: {sprite: 1, bonus: 10, patron: 1},
-      gloves: {sprite: 1, bonus: 10, patron: 1},
-      chest: {sprite: 1, bonus: 10, patron: 1},
-      legs: {sprite: 1, bonus: 10, patron: 1},
-      feet: {sprite: 1, bonus: 10, patron: 1},
-      sheild: {sprite: 1, bonus: 10, patron: 1}
-    }
     const color = randColors[Math.floor(Math.random() * 6)];
-    return <Character color={color} character={test}></Character>
+    let selected = false;
+    console.log('Roster', props);
+    console.log('charac', character);
+    for(const driver of props.roster){
+      console.log(driver.id === character.id)
+      if(driver.id === character.id){
+        selected = true;
+      }
+    }
+    return <Character selected={selected} add={props.addRoster} remove={props.removeRoster} color={color} character={character}></Character>
   })
   return (
     <Container>
-      {characters};
+      {characters}
     </Container>
   );
 };

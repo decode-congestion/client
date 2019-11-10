@@ -34,29 +34,41 @@ const Char = styled.div`
 const Info = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   p {
-    margin: 1vw;
+    margin: 3vw;
   }
 `;
 const Button = styled.button`
   position: absolute;
   bottom: 3vw;
-  right: 3vw;
+  right: 0vw;
+  color: white;
   background-color: transparent;
   border-radius: 50%;
-
-  height: 15vw;
-  width: 15vw;
-  ${props => {
-    return `
-      border: 2px solid #77dd77;
-    `
-  }}
+  border: 2px solid ${props => props.selected? `#e74c3c` : `#77dd77`};
+  background-color: ${props => props.selected? `#e74c3c` : `#77dd77`};
+  height: 12vw;
+  width: 12vw;
 `;
 
 const index = (props) => {
   const select = () => {
+    if(props.selected){
+      props.remove(props.character);
+    }else{
+      props.add(props.character);
+    }
 
+  }
+  const bonus = () =>{
+    let bonus = 0;
+    for(const [key, value] of Object.entries(props.character)){
+      if(value.bonus){
+        bonus++;
+      }
+    }
+    return bonus;
   }
   return (
     <Show>
@@ -65,8 +77,9 @@ const index = (props) => {
         <Link to={`/character/${props.character.id}`}> <CharacterSprite left="20" zoom="50" character={props.character}></CharacterSprite></Link>
       </Char>
       <Info>
-        <p>stats</p>
-        <p>active</p>
+        <p>Bonus: {bonus()} +</p>
+        <p>Wins: 10</p>
+        <p>Fans: 8</p>
         <Button onClick={select} selected={props.selected}>X</Button>
       </Info>
     </Show>

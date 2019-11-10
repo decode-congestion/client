@@ -2,12 +2,27 @@ import React, {useEffect, useRef, useState, useContext} from 'react';
 import styled, { css } from 'styled-components';
 import { colors, fonts, borders } from 'src/styles';
 import AppContext from 'src/App/AppContext';
+import { useHistory } from "react-router-dom";
 
 const Container = styled.div`
   background: transparent;
-  margin: 0.5em 1em;
-  padding: 0.25em 1em;
+  position: absolute;
+  width: 100vw;
   border-radius: 3vw;
+  h1{
+    width: 100%;
+    font-size: 5rem;
+    margin-top: 10vh;
+    color: ${colors.white};
+    text-align: center;
+  }
+  h2{
+    width: 100%;
+    font-size: 2rem;
+    margin-top: 10vh;
+    color: ${colors.white};
+    text-align: center;
+  }
 `;
 const Button =  styled.div`
   position: fixed;
@@ -46,26 +61,11 @@ const Button =  styled.div`
 
 const Repeat = styled.div`
   position:absolute;
-  background-image: ${props => props.version? `url('/images/Streetbackground.png')` : `url('/images/grass.png')`};
-  background-size: ${props => props.version? `12%`: `40%`};
-
-  width: 1810vw;
-  background-repeat: repeat-x;
+  background-image: url('/images/characterbg.gif')};
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
   left: 0;
-  ${props => props.version?  `top: 0vh` : `top: 70vh`};
-  height: 70vh;
-  animation-name: scrollGood;
-  animation-duration: 5s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  @keyframes scrollGood {
-    0% {
-      transform: translate3d(0,0,0);
-    }
-    100% {
-      transform: translate3d(-810px,0,0);
-    }
-  }
 `;
 
 const Overflow = styled.div`
@@ -76,107 +76,80 @@ const Overflow = styled.div`
   background-color: #d1ffdd;
 `;
 
-const Bus = styled.div`
-  position: absolute;
-  width: 44vw;
-  background-size: cover;
-  height: 20vw;
+const Counter = styled.div`
   z-index: 30;
-  animation-name: bounce;
-  animation-duration: 1s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  @keyframes bounce {
-    0% {
-      margin-top: 0vw;
-    }
-    50% {
-      margin-top: -2vw;
-    }
-    100% {
-      margin-top: 0vw;
-    }
-  }
-  background-image: url('/images/bus1.png');
-  ${props => {
-    if (props.right){
-      return `
-      top: 45%;
-      right: 2%;
-      transform: scaleX(-1);
-      background-image: url('/images/bus2.png');
-      `;
-    } else {
-      return `
-      top: 55%;
-      left: 2%;
-      `;
-    }
-  }}
+  width: 100vw;
+  padding-left: 80vw;
+  margin-top: 40vw;
+  height: 50vh;
+  display:flex;
+  flex-wrap: wrap;
 `;
-const shared = `
-position: absolute;
-width: 20vw;
-height: auto;
-top: 0;
-right: 0;
-animation-name: fly;
-animation-duration: 1.5s;
-animation-fill-mode: forwards;
-`
-const Projectile = styled.img`
-  ${shared}
-  @keyframes fly {
-    90% {
-      top: -100vh;
-      right: 100vh;
-    }
-    100%{
-      top: -100vh;
-      right: 100vh;
-      visibility: hidden;
-    }
-  }
-`;
-const Projectile2 = styled.img`
-  ${shared}
-  animation-name: fly2;
-  @keyframes fly2 {
-    90% {
-      top: -100vh;
-      right: -100vh;
-    }
-    100%{
-      top: -100vh;
-      right: -100vh;
-      visibility: hidden;
-    }
-  }
-`;
-const types = [
-  <Projectile  src="/images/barrier.png"></Projectile>,
-  <Projectile  src="/images/sign_blue.png"></Projectile>,
-  <Projectile2  src="/images/sign_red.png"></Projectile2>,
-  <Projectile2  src="/images/sign_street.png"></Projectile2>,
-  <Projectile2  src="/images/barrier.png"></Projectile2>,
-]
 
-const JoustDisplay = (props) => {
+const Person = styled.div`
+  width: 20vh;
+  height: 20vh;
+  margin: -20vw;
+  background-image: url('/images/driver2.png');
+  background-size: contain;
+`;
+const Bike = styled.div`
+  width: 40vh;
+  height: 40vh;
+  margin: -40vw;
+  background-image: url('/images/bike.png');
+  background-size: contain;
+`;
+const Car = styled.div`
+  width: 40vh;
+  height: 40vh;
+  margin: -40vw;
+  background-image: url('/images/car.png');
+  background-size: contain;
+`;
+const Submit =  styled.div`
+  position: fixed;
+  background-color: #77dd77;
+  backdrop-filter: blur(10px);
+  border-radius: 50%;
+  width: 15vw;
+  height: 15vw;
+  bottom: 22.5vw;
+  left: 20vw;
+`;
+
+
+const GameDisplay = (props) => {
+  const [things, setThings] = useState([]);
   const App = useContext(AppContext);
-  const [projectiles, setProjecticles] = useState(types);
-  const joust = () => {
-    const x = Math.floor(Math.random() * 5);
-    App.joust();
-    setProjecticles(types[x]);
+  let history = useHistory();
+  const submit = () => {
+    App.sendInfo({type: props.match.params.mode, count: things.length});
+    history.push("/celebration");
   };
+  const add = () => {
+    if(props.match.params.mode === "people"){
+      setThings([...things, <Person></Person>]);
+    }else if(props.match.params.mode === "bikes"){
+      setThings([...things, <Bike></Bike>]);
+    }else {
+      setThings([...things, <Car></Car>]);
+    }
+  }
   return (
     <Overflow>
       <Repeat></Repeat>
       <Container> 
-        <Button onClick={joust}></Button>
+        <h2>How man {props.match.params.mode} can you see on the street?</h2>
+        <h1>{things.length}</h1>
+        <Counter>
+          {things}
+        </Counter>
+        <Button onClick={add}></Button>
+        <Submit onClick={submit}></Submit>
       </Container>
     </Overflow>
   );
 };
 
-export default JoustDisplay;
+export default GameDisplay;

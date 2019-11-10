@@ -12,20 +12,18 @@ class Socket {
   login = (id) => {
     cookies.set('id', id);
     this.socket = io('http://localhost',  { query: `id=${cookies.id}` });
-    this.socket.on ('shunt', function (namespace, object) {
-      this.socketState = io(`http://localhost/${namespace}`);
-      if(true){
-        this.bus = 12;
-      }else{
-        this.busStop = 12;
-      }
+    this.socketState = this.socket;
+    this.socket.on ('shunt', function (data) {
+      this.socketState = io(`http://localhost/${data.namespace}`);
+      this.bus = data.busId;
+      this.socket.emit('join', {busId: this.bus});
     });
     setInterval(this.update, 2000);
   }
   update = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((res) => {
-        this.socket.emit ('update', {id: cookies.id, coords: res.coords});
+        this.socketState.emit ('update', {id: cookies.id, busId: this.bus, coords: res.coords});
       });
     }
   }
@@ -47,7 +45,7 @@ class Socket {
   }
 
   sendInfo = (data) => {
-    const send = {type: 'peds', count: 1};
+    const send = {type: data.type, count: data.count};
     this.socket.emit ('game', send);
   }
 
