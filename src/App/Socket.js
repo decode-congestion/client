@@ -11,19 +11,19 @@ class Socket {
   }
   login = (id) => {
     cookies.set('id', id);
-    this.socket = io('http://localhost',  { query: `id=${cookies.id}` });
+    this.socket = io('http://localhost:3003');
     this.socketState = this.socket;
     this.socket.on ('shunt', function (data) {
-      this.socketState = io(`http://localhost/${data.namespace}`);
+      this.socketState = io(`http://localhost:3003/${data.namespace}`);
       this.bus = data.busId;
-      this.socket.emit('join', {busId: this.bus});
+      this.socket.emit('join', {id: cookies.get('id'), busId: this.bus});
     });
     setInterval(this.update, 2000);
   }
   update = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((res) => {
-        this.socketState.emit ('update', {id: cookies.id, busId: this.bus, coords: res.coords});
+        this.socketState.emit ('update', {id: cookies.get('id'), busId: this.bus, coords: res.coords});
       });
     }
   }
@@ -40,12 +40,12 @@ class Socket {
   }
 
   joust = (getCurrentPosition) => {
-    const send = {damage: 1};
+    const send = {id: cookies.get('id'), damage: 1};
     this.socket.emit ('joust', send);
   }
 
   sendInfo = (data) => {
-    const send = {type: data.type, count: data.count};
+    const send = {id: cookies.get('id'), type: data.type, count: data.count};
     this.socket.emit ('game', send);
   }
 
