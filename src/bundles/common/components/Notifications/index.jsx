@@ -45,9 +45,17 @@ const Notifications = () => {
   const [active, setActive] = useState(false);
   const [notice, setNotice] = useState({});
   const App = useContext(AppContext);
-  const subnotice = (type, res) => {
+  const subnotice = (type, res, accept) => {
     setActive(true);
-    setNotice({type: type, name: res.name, varient: res.varient});
+    if(type==="end_joust"){
+      setNotice({message: res.message});
+    }else{
+      setNotice({accept, type: type, name: res.name, varient: res.varient});
+    }
+  }
+  const accept = () => {
+    notice.accept();
+    setActive(false);
   }
   useEffect(()=>{
     App.login(1);
@@ -56,7 +64,8 @@ const Notifications = () => {
   return (
     <div>
       <Notificationscontainer active={active}>
-        <Notification><p>Upcomming {notice.name} Event <span>{notice.varient}</span> </p><div><Link to={`/${notice.type}`}><Button onClick={()=>setActive(false)} /></Link><Button onClick={()=>setActive(false)} cancel={true}/></div></Notification>
+        {notice.message && <Notification><p> {notice.message}<span></span> </p><div><Link to={`/characters`}><Button onClick={accept}/></Link><Button onClick={()=>setActive(false)} cancel={true}/></div></Notification>}
+        { notice.message || <Notification><p>Upcomming {notice.name} Event <span>{notice.varient}</span> </p><div><Link to={`/${notice.type}${notice.varient? `/${notice.varient}`: ``}`}><Button onClick={accept}/></Link><Button onClick={()=>setActive(false)} cancel={true}/></div></Notification>}
       </Notificationscontainer>
     </div>
   );

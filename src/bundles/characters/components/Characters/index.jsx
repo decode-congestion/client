@@ -18,8 +18,6 @@ const index = (props) => {
   const characters = props.characters.map((character) => {
     const color = randColors[Math.floor(Math.random() * 6)];
     let selected = false;
-    console.log('Roster', props);
-    console.log('charac', character);
     for(const driver of props.roster){
       console.log(driver.id === character.id)
       if(driver.id === character.id){

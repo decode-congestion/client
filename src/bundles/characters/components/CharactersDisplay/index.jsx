@@ -3,6 +3,10 @@ import styled, { css } from 'styled-components';
 import Roster from '../Roster';
 import Characters from '../Characters';
 import { colors, fonts, borders } from 'src/styles'
+import Cookies from 'universal-cookie';
+import axios from 'axios';
+
+const cookies = new Cookies();
 
 const Container = styled.div`
   width: 100vw;
@@ -84,11 +88,67 @@ const testRoster = [
   }
 ]
 
+const armorLookup = {
+  1: 'helmet',
+  2: 'chest',
+  3: 'gloves',
+  4: 'legs',
+  5: 'boots',
+  6: 'sheilds'
+}
+
+const driverLookup = {
+  0: 'Lisa',
+  1: 'Lou',
+  2: 'Max',
+  3: 'Sean',
+  4: 'Frank',
+  5: 'Doug',
+  6: 'Lee'
+}
+
 const CharactersDisplay = () => {
   const [drivers, setDrivers] = useState([]);
   const [roster, setRoster] = useState([]);
   useEffect(() => {
-    //fetch users characters and roster
+    // fetch users characters and roster
+    Promise.all([
+      axios({method: 'get', headers: {'Access-Control-Allow-Origin': '*'}, url:`http://6e8733a1.ngrok.io/api/users/${cookies.get('id')}/collected`}),
+      axios({method: 'get', headers: {'Access-Control-Allow-Origin': '*'}, url:`http://6e8733a1.ngrok.io/api/users/${cookies.get('id')}/roster_vehicles`})
+    ]).then(res=>{
+      const rosterRes = res[1].data;
+      const driverRes = res[0].data;
+      const newRoster = rosterRes.roster_vehicles.map(roster => {
+        console.log('rouster', roster);
+        const build =  {
+          id: roster.vehicle_id,
+          name: driverLookup[roster.vehicle_id]
+        };
+        for( let loot of rosterRes.loots){
+          if(loot.vehicle_id === loot.id){
+            build[armorLookup[loot.type]] = {sprite: loot.sprite, bonus: loot.modifier, patron: loot.user_id, name: loot.name};
+          }
+        }
+        return build;
+      })
+      const newDrivers = rosterRes.roster_vehicles.map(roster => {
+        console.log('rouster', roster);
+        const build =  {
+          id: roster.vehicle_id,
+          name: driverLookup[roster.vehicle_id]
+        };
+        for( let loot of rosterRes.loots){
+          if(loot.vehicle_id === loot.id){
+            build[armorLookup[loot.type]] = {sprite: loot.sprite, bonus: loot.modifier, patron: loot.user_id, name: loot.name};
+          }
+        }
+        return build;
+      })
+      setRoster(newRoster);
+    }).catch(err => {
+      console.log(err);
+    });
+
     setDrivers(test);
     setRoster(testRoster);
   }, [])

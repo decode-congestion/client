@@ -125,7 +125,7 @@ const GameDisplay = (props) => {
   let history = useHistory();
   const submit = () => {
     App.sendInfo({type: props.match.params.mode, count: things.length});
-    history.push("/celebration");
+    history.push("/gear");
   };
   const add = () => {
     if(props.match.params.mode === "people"){

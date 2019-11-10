@@ -98,7 +98,7 @@ const index = (props) => {
   }
   return (
     <Slot onClick={gearSelect} currentGear={currentGear} type={props.type} value={props.value}>
-      <p>+50</p>
+      <p>+{props.value && props.value.bonus}</p>
       <Tooltip><span>{props.value && props.value.name}</span>({props.value && props.value.patron})</Tooltip>
     </Slot>
   );

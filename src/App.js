@@ -15,9 +15,10 @@ const routes = [
   ...characterRoutes,
   ...charactersRoutes,
   ...gameRoutes,
-  ...joustRoutes
+  ...joustRoutes,
+  ...gearRoutes
 ]
-
+console.log(routes);
 function App() {
   return (
     <Router>
