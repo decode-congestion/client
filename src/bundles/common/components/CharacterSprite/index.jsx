@@ -16,34 +16,51 @@ const Character = styled.div`
   image-rendering: pixelated; /* Chrome */
 `;
 const Armour = styled.div`
-  color: green;
+  position: absolute;
+  background-size: contain;
+  width: 45vh;
+  height: 45vh;
+  background-image: ${props => `url('${props.sprite}')`};
 `
 
 const Head = styled(Armour)`
-  /* some non-Armour styles */
-`
-const Shoulders = styled(Armour)`
+ 
   /* some non-Armour styles */
 `
 const Chest = styled(Armour)`
+ 
   /* some non-Armour styles */
 `
 const Legs = styled(Armour)`
+ 
   /* some non-Armour styles */
 `
-const getCharacterSprite = () => {
-  //get character sprite based on props
-  return '/images/nima.png';
-};
+const Feet = styled(Armour)`
+ 
+  /* some non-Armour styles */
+`
+const Sheild = styled(Armour)`
+ 
+  /* some non-Armour styles */
+`
+const Gloves = styled(Armour)`
+ 
+  /* some non-Armour styles */
+`
 
 const index = (props) => {
-  const characterSprite = getCharacterSprite(props.character);
   return (
-      <Character zoom={props.zoom} left={props.left} characterSprite={characterSprite}>
-        <Head></Head>
-        <Shoulders></Shoulders>
-        <Chest></Chest>
-        <Legs></Legs>
+      <Character zoom={props.zoom} left={props.left} characterSprite={`/images/driver${props.character.id%3}.png`}>
+        {props.character.helmet && (
+          <React.Fragment>
+            <Head zoom={props.zoom} left={props.left} sprite={`/images/helmet${props.character.helmet.sprite%3}.png`}></Head>
+            <Chest zoom={props.zoom} left={props.left} sprite={`/images/chest${props.character.chest.sprite%3}.png`}></Chest>
+            <Gloves zoom={props.zoom} left={props.left} sprite={`/images/gloves${props.character.gloves.sprite%3}.png`}></Gloves>
+            <Legs zoom={props.zoom} left={props.left} sprite={`/images/legs${props.character.legs.sprite%3}.png`}></Legs>
+            <Feet zoom={props.zoom} left={props.left} sprite={`/images/feet${props.character.feet.sprite%3}.png`}></Feet>
+            <Sheild zoom={props.zoom} left={props.left} sprite={`/images/sheild${props.character.sheild.sprite%3}.png`}></Sheild>
+          </React.Fragment>
+        )}
       </Character>
   );
 };

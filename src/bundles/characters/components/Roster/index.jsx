@@ -26,6 +26,8 @@ const Round = styled.div`
     position: absolute;
     background-color: ${colors.white};
     border-radius: 2vw;
+    z-index: 5;
+    margin-top: 1vw;
     padding: 1vw;
     width: 20vw;
     text-align: center;
@@ -35,7 +37,17 @@ const Round = styled.div`
 
 const index = (props) => {
   const characters = props.characters.map((character) => {
-    return <Round><p>{character.name}</p><CharacterSprite  left="50" character={character}></CharacterSprite></Round>;
+    const test = {
+      id: 1,
+      name: 'name',
+      helmet: {sprite: 1, bonus: 10, patron: 1},
+      gloves: {sprite: 1, bonus: 10, patron: 1},
+      chest: {sprite: 1, bonus: 10, patron: 1},
+      legs: {sprite: 1, bonus: 10, patron: 1},
+      feet: {sprite: 1, bonus: 10, patron: 1},
+      sheild: {sprite: 1, bonus: 10, patron: 1}
+    }
+    return <Round><p>{character.name}</p><CharacterSprite  left="50" character={test}></CharacterSprite></Round>;
   })
   return (
     <Container>

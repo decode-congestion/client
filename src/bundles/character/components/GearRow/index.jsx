@@ -12,7 +12,7 @@ const Container = styled.div`
 
 const index = (props) => {
   const slots = props.slots.map((slot) => {
-    return <Slot type={props.type} character={props.character}></Slot>
+    return <Slot type={slot.type} value={slot.value}></Slot>
   })
   return (
     <Container>

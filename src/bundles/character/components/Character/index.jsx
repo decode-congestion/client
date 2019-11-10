@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled, { css } from 'styled-components';
 import CharacterSprite from 'src/bundles/common/components/CharacterSprite';
 import { colors, fonts, borders } from 'src/styles'
@@ -12,7 +12,21 @@ const Container = styled.div`
   border-radius: 3vw;
 `;
 
-const index = (props) => {
+const Character = (props) => {
+  const [character, setCharacter] = useState({});
+  useEffect(()=>{
+    const test = {
+      id: 1,
+      name: 'name',
+      helmet: {sprite: 1, bonus: 10, patron: 1},
+      gloves: {sprite: 1, bonus: 10, patron: 1},
+      chest: {sprite: 1, bonus: 10, patron: 1},
+      legs: {sprite: 1, bonus: 10, patron: 1},
+      feet: {sprite: 1, bonus: 10, patron: 1},
+      sheild: {sprite: 1, bonus: 10, patron: 1}
+    }
+    setCharacter(test);
+  }, [])
   return (
     <Container> 
       <CharacterSprite character={props.character}></CharacterSprite>
@@ -20,4 +34,4 @@ const index = (props) => {
   );
 };
 
-export default index;
+export default Character;

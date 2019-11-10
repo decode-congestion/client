@@ -5,6 +5,7 @@ import { colors, fonts, borders } from 'src/styles'
 
 const Menucontainer = styled.div`
   position: fixed;
+  z-index: 90;
   top: 0;
   height: 100vh;
   width: 25vw;
@@ -17,6 +18,7 @@ const Menucontainer = styled.div`
 
 const Button =  styled.div`
   position: fixed;
+  z-index: 90;
   border: 2px solid ${colors.five};
   backdrop-filter: blur(10px);
   border-radius: 50%;
@@ -37,8 +39,10 @@ const Item = styled.div`
   width: 30vw;
   height: 30vw;
   margin: 2vw;
+  background-size: contain;
   border-radius: 50%;
   backdrop-filter: blur(5px);
+  background-image: url('${props => props.image}');
   border: 2px solid ${props => colors[props.color]};
   margin-left: ${props => props.active? '0' : '20vw'};
   transition: all ${props => props.time}ms ease-in-out;
@@ -49,9 +53,9 @@ const Menu = () => {
   return (
     <div>
       <Menucontainer active={active}>
-        <Link to="/characters" ><Item color="two" time="300" active={active}/></Link>
-        <Link to="/character/2"><Item color="three" time="800" active={active}/></Link>
-        <Link to="/gear"><Item color="four" time="600" active={active}/></Link>
+        <Link to="/characters" ><Item color="four" image={'/images/character.png'} time="300" active={active}/></Link>
+        <Link to="/character/2"><Item color="three" image={'/images/menu.gif'} time="800" active={active}/></Link>
+        <Link to="/gear"><Item color="two" image={'/images/armor.png'} time="600" active={active}/></Link>
       </Menucontainer>
       <Button onClick={()=>{active? setActive(false) : setActive(true)}}><Image src={require('src/assets/images/menu.gif')}></Image></Button>
     </div>

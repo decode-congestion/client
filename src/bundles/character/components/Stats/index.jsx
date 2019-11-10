@@ -14,16 +14,24 @@ const Stat = styled.p`
   font-weight: bold;
   font-size: 1.2rem; 
   margin: 0;
-  background-color: rgba(256, 256, 256, 0.3);
+  background-color: rgba(256, 256, 256, 0.4);
 `;
 
-const index = () => {
+const index = (props) => {
+  let bonus = 0;
+  let equiped = 0;
+  for(const [key, thing] of Object.entries(props.character)){
+    if(thing.bonus){
+      equiped++;
+      bonus += thing.bonus;
+    }
+  }
   return (
     <Container>
-      <Stat>34%</Stat>
-      <Stat>34%</Stat>
-      <Stat>34%</Stat>
-      <Stat>34%</Stat>
+      <Stat>Bonus: {bonus}+</Stat>
+      <Stat>Equiped: {equiped}</Stat>
+      <Stat>Fans: 12</Stat>
+      <Stat>Champion: 6</Stat>
     </Container>
   );
 };

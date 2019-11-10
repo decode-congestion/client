@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import Character from '../Character';
 import Stats from '../Stats';
@@ -20,6 +20,7 @@ const Title = styled.h1`
 `
 const Container = styled.div`
   text-align: center;
+  overflow: hidden;
   background-image: url(${require('src/assets/images/characterbg2.png')});
   background-size: cover;
   background-position: center;
@@ -27,18 +28,32 @@ const Container = styled.div`
   margin: 0;
 `
 
-const index = () => {
+const CharacterDisplay = () => {
+  let [character, setCharacter] = useState({});
+  useEffect(()=>{
+    const test = {
+      id: 1,
+      name: 'name',
+      helmet: {sprite: 1, bonus: 10, patron: 1, name: 'gloves of fire'},
+      gloves: {sprite: 1, bonus: 10, patron: 1, name: 'gloves of fire'},
+      chest: {sprite: 1, bonus: 10, patron: 1, name: 'gloves of fire'},
+      legs: {sprite: 1, bonus: 10, patron: 1, name: 'gloves of fire'},
+      feet: {sprite: 1, bonus: 10, patron: 1, name: 'gloves of fire'},
+      sheild: {sprite: 1, bonus: 10, patron: 1, name: 'gloves of fire'}
+    }
+    setCharacter(test);
+  },[]);
   return (
     <Container>
       <Rows>
-        <Title> CHARACTER </Title>
-        <Stats character={test.character}/>
-        <GearRow slots={['shoulders', 'head', 'chest']}/>
-        <Character character={test.character}/>
-        <GearRow slots={['legs', 'feet', 'belt']}/>
+        <Title> {character.name} </Title>
+        <Stats character={character}/>
+        <GearRow slots={[{type: 'gloves', value: character.gloves }, {type: 'helmet', value: character.helmet }, {type: 'chest', value: character.chest }]}/>
+        <Character character={character}/>
+        <GearRow slots={[{type: 'legs', value: character.legs }, {type: 'feet', value: character.feet }, {type: 'sheild', value: character.sheild }]}/>
       </Rows>
     </Container>
   );
 };
 
-export default index;
+export default CharacterDisplay;

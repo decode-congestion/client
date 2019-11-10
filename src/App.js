@@ -1,5 +1,6 @@
 import React from 'react';
 import Menu from 'src/bundles/common/components/Menu';
+import Notifications from 'src/bundles/common/components/Notifications';
 import {BrowserRouter as Router, Switch } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
@@ -21,6 +22,7 @@ function App() {
     <Router>
       {routes}
       <Menu></Menu>
+      <Notifications></Notifications>
     </Router>
   );
 }

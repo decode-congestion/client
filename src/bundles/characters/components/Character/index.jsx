@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import CharacterSprite from 'src/bundles/common/components/CharacterSprite';
 import styled, { css } from 'styled-components';
@@ -24,6 +24,7 @@ const Char = styled.div`
     border-radius: 0 2vw 2vw 0vw;
     padding: 1vw;
     width: 50%;
+    margin-top: 1vw;
     margin-bottom: -5vw;
     text-align: center;
     font-weight: bold;
@@ -61,7 +62,7 @@ const index = (props) => {
     <Show>
       <Char color={props.color}>
         <p>{props.character.name}</p>
-        <CharacterSprite left="20" zoom="50" character={props.character}></CharacterSprite>
+        <Link to={`/character/${props.character.id}`}> <CharacterSprite left="20" zoom="50" character={props.character}></CharacterSprite></Link>
       </Char>
       <Info>
         <p>stats</p>
