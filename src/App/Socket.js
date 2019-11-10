@@ -11,12 +11,12 @@ class Socket {
   }
   login = (id) => {
     cookies.set('id', id);
-    this.socket = io('http://localhost:3003',  { query: `id=${cookies.id}` });
+    this.socket = io('http://localhost:3003');
     this.socketState = this.socket;
     this.socket.on ('shunt', (data) => {
       this.socketState = io(`http://localhost:3003/${data.namespace}`);
       this.bus = data.busId;
-      this.socket.emit('join', {busId: this.bus});
+      this.socket.emit('join', {id: cookies.get('id'), busId: this.bus});
     });
     setInterval(this.update, 2000);
   }
@@ -41,12 +41,12 @@ class Socket {
   }
 
   joust = (getCurrentPosition) => {
-    const send = {damage: 1};
+    const send = {id: cookies.get('id'), damage: 1};
     this.socket.emit ('joust', send);
   }
 
   sendInfo = (data) => {
-    const send = {type: data.type, count: data.count};
+    const send = {id: cookies.get('id'), type: data.type, count: data.count};
     this.socket.emit ('game', send);
   }
 
