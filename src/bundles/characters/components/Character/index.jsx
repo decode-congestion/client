@@ -64,7 +64,7 @@ const index = (props) => {
   const bonus = () =>{
     let bonus = 0;
     for(const [key, value] of Object.entries(props.character)){
-      if(value.bonus){
+      if(value && value.bonus){
         bonus++;
       }
     }
@@ -72,10 +72,10 @@ const index = (props) => {
   }
   return (
     <Show>
-      <Char color={props.color}>
-        <p>{props.character.name}</p>
-        <Link to={`/character/${props.character.id}`}> <CharacterSprite left="20" zoom="50" character={props.character}></CharacterSprite></Link>
-      </Char>
+        <Char color={props.color}>
+          <p>{props.character.name}</p>
+          <Link to={`/character/${props.character.id}`}> <CharacterSprite left="20" zoom="50" character={props.character}></CharacterSprite></Link>
+        </Char>
       <Info>
         <p>Bonus: {bonus()} +</p>
         <p>Wins: 10</p>

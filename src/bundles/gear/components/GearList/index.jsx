@@ -39,12 +39,12 @@ const test = {
   onClick: null,
   currentGear: null,
   type: 'helmet',
-  value: {sprite: 1, bonus: 10, patron: 1, name: "gear of the golden god"}
+  value: {sprite: 1, bonus: 10, patron: 1, name: "Armour of Transit"}
 }
 const index = (props) => {
   const gear = [1,2,3,4,5,56,6];
   const gearList = gear.map((piece)=> {
-    return <GearRow><Slot {...test} ></Slot><Stats><p><span>{test.value.name}</span></p><Button></Button></Stats></GearRow>
+    return <GearRow><Slot {...test} ></Slot><Stats><p><span>{test.value.name}</span></p></Stats></GearRow>
   })
   return (
     <Container>

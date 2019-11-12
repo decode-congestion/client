@@ -12,7 +12,7 @@
     "styled-components": "^4.4.1",
     "universal-cookie": "^4.0.2"
   },
-  "proxy": "http://6e8733a1.ngrok.io",
+  "proxy": "http://46ff7fc8.ngrok.io",
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",

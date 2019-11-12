@@ -140,7 +140,7 @@ const GameDisplay = (props) => {
     <Overflow>
       <Repeat></Repeat>
       <Container> 
-        <h2>How man {props.match.params.mode} can you see on the street?</h2>
+        <h2>How many {props.match.params.mode} can you see on the street?</h2>
         <h1>{things.length}</h1>
         <Counter>
           {things}

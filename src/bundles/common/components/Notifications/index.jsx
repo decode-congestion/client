@@ -54,7 +54,9 @@ const Notifications = () => {
     }
   }
   const accept = () => {
-    notice.accept();
+    if(notice.accept){
+      notice.accept();
+    }
     setActive(false);
   }
   useEffect(()=>{
@@ -64,7 +66,7 @@ const Notifications = () => {
   return (
     <div>
       <Notificationscontainer active={active}>
-        {notice.message && <Notification><p> {notice.message}<span></span> </p><div><Link to={`/characters`}><Button onClick={accept}/></Link><Button onClick={()=>setActive(false)} cancel={true}/></div></Notification>}
+        {notice.message && <Notification><p> {notice.message}<span></span> </p><div><Link to={`/characters`}><Button onClick={()=>setActive(false)} /></Link><Button onClick={()=>setActive(false)} cancel={true}/></div></Notification>}
         { notice.message || <Notification><p>Upcomming {notice.name} Event <span>{notice.varient}</span> </p><div><Link to={`/${notice.type}${notice.varient? `/${notice.varient}`: ``}`}><Button onClick={accept}/></Link><Button onClick={()=>setActive(false)} cancel={true}/></div></Notification>}
       </Notificationscontainer>
     </div>

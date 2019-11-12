@@ -49,16 +49,17 @@ const Gloves = styled(Armour)`
 `
 
 const index = (props) => {
+  console.log(props);
   return (
       <Character zoom={props.zoom} left={props.left} characterSprite={`/images/driver${props.character.id%3}.png`}>
-        {props.character.helmet && (
+        { (
           <React.Fragment>
-            <Head zoom={props.zoom} left={props.left} sprite={`/images/helmet${props.character.helmet && props.character.helmet.sprite%3}.png`}></Head>
-            <Chest zoom={props.zoom} left={props.left} sprite={`/images/chest${props.character.chest && props.character.chest.sprite%3}.png`}></Chest>
-            <Gloves zoom={props.zoom} left={props.left} sprite={`/images/gloves${props.character.gloves && props.character.gloves.sprite%3}.png`}></Gloves>
-            <Legs zoom={props.zoom} left={props.left} sprite={`/images/legs${props.character.legs && props.character.legs.sprite%3}.png`}></Legs>
-            <Feet zoom={props.zoom} left={props.left} sprite={`/images/feet${props.character.feet && props.character.feet.sprite%3}.png`}></Feet>
-            <Sheild zoom={props.zoom} left={props.left} sprite={`/images/sheild${props.character.sheild &&props.character.sheild.sprite%3}.png`}></Sheild>
+            <Head zoom={props.zoom} left={props.left} sprite={`/images/helmet${props.character.helmet && props.character.helmet.sprite}.png`}></Head>
+            <Chest zoom={props.zoom} left={props.left} sprite={`/images/chest${props.character.chest && props.character.chest.sprite}.png`}></Chest>
+            <Gloves zoom={props.zoom} left={props.left} sprite={`/images/gloves${props.character.gloves && props.character.gloves.sprite}.png`}></Gloves>
+            <Legs zoom={props.zoom} left={props.left} sprite={`/images/legs${props.character.legs && props.character.legs.sprite}.png`}></Legs>
+            <Feet zoom={props.zoom} left={props.left} sprite={`/images/feet${props.character.feet && props.character.feet.sprite}.png`}></Feet>
+            <Sheild zoom={props.zoom} left={props.left} sprite={`/images/sheild${props.character.sheild &&props.character.sheild.sprite}.png`}></Sheild>
           </React.Fragment>
         )}
       </Character>

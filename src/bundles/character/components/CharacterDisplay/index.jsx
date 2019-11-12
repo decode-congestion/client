@@ -4,6 +4,10 @@ import Character from '../Character';
 import Stats from '../Stats';
 import GearRow from '../GearRow';
 import { colors, fonts, borders } from 'src/styles'
+import axios from 'axios';
+import Cookies from 'universal-cookie';
+
+let cookies = new Cookies();
 
 const test = {
   character: {
@@ -27,9 +31,53 @@ const Container = styled.div`
   height: 100vh;
   margin: 0;
 `
+const armorLookup = {
+  1: 'helmet',
+  2: 'chest',
+  3: 'gloves',
+  4: 'legs',
+  5: 'feet',
+  6: 'sheilds'
+}
 
-const CharacterDisplay = () => {
+const driverLookup = {
+  0: 'Lisa',
+  1: 'Lou',
+  2: 'Max',
+  3: 'Sean',
+  4: 'Frank',
+  5: 'Doug',
+  6: 'Lee'
+}
+
+const CharacterDisplay = (props) => {
   let [character, setCharacter] = useState({});
+  const [roster, setRoster] = useState([]);
+  useEffect(() => {
+    // fetch users characters and roster
+      axios({method: 'get', headers: {'Access-Control-Allow-Origin': '*'}, url:`http://46ff7fc8.ngrok.io/api/users/${cookies.get('id')}/roster_vehicles`})
+      .then(res=>{
+        const rosterRes = res.data;
+        let build = {};
+        rosterRes.roster_vehicles.forEach(roster => {
+          console.log('one', roster, props.match.params.id);
+          if(roster.vehicle_id == props.match.params.id){
+            build =  {
+              id: roster.vehicle_id,
+              name: driverLookup[roster.vehicle_id]
+            };
+            for( let loot of rosterRes.loots){
+              console.log("LOOOT", loot);
+              if(loot.vehicle_id === roster.vehicle_id){
+                build[armorLookup[loot.type]] = {sprite: loot.sprite, bonus: loot.modifier, patron: loot.user_id, name: loot.name};
+              }
+            }
+          }
+        })
+        setCharacter(build);
+      });
+  },[]);
+
   useEffect(()=>{
     const test = {
       id: 1,

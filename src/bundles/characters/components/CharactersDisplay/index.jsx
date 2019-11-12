@@ -101,7 +101,7 @@ const driverLookup = {
   0: 'Lisa',
   1: 'Lou',
   2: 'Max',
-  3: 'Sean',
+  3: 'Sarah',
   4: 'Frank',
   5: 'Doug',
   6: 'Lee'
@@ -113,17 +113,30 @@ const CharactersDisplay = () => {
   useEffect(() => {
     // fetch users characters and roster
     Promise.all([
-      axios({method: 'get', headers: {'Access-Control-Allow-Origin': '*'}, url:`http://6e8733a1.ngrok.io/api/users/${cookies.get('id')}/collected`}),
-      axios({method: 'get', headers: {'Access-Control-Allow-Origin': '*'}, url:`http://6e8733a1.ngrok.io/api/users/${cookies.get('id')}/roster_vehicles`})
+      axios({method: 'get', headers: {'Access-Control-Allow-Origin': '*'}, url:`http://46ff7fc8.ngrok.io/api/users/${cookies.get('id')}/collected`}),
+      axios({method: 'get', headers: {'Access-Control-Allow-Origin': '*'}, url:`http://46ff7fc8.ngrok.io/api/users/${cookies.get('id')}/roster_vehicles`})
     ]).then(res=>{
       const rosterRes = res[1].data;
       const driverRes = res[0].data;
       const newRoster = rosterRes.roster_vehicles.map(roster => {
-        console.log('rouster', roster);
         const build =  {
           id: roster.vehicle_id,
           name: driverLookup[roster.vehicle_id]
         };
+        for( let loot of rosterRes.loots){
+          if(loot.vehicle_id === roster.vehicle_id){
+            build[armorLookup[loot.type]] = {sprite: loot.sprite, bonus: loot.modifier, patron: loot.user_id, name: loot.name};
+          }
+        }
+        return build;
+      })
+      console.log('stuff', driverRes);
+      const newDrivers = driverRes.cv.map(roster => {
+        const build =  {
+          id: roster.vehicle_id,
+          name: driverLookup[roster.vehicle_id]
+        };
+        console.log('driver', build);
         for( let loot of rosterRes.loots){
           if(loot.vehicle_id === loot.id){
             build[armorLookup[loot.type]] = {sprite: loot.sprite, bonus: loot.modifier, patron: loot.user_id, name: loot.name};
@@ -131,20 +144,9 @@ const CharactersDisplay = () => {
         }
         return build;
       })
-      const newDrivers = rosterRes.roster_vehicles.map(roster => {
-        console.log('rouster', roster);
-        const build =  {
-          id: roster.vehicle_id,
-          name: driverLookup[roster.vehicle_id]
-        };
-        for( let loot of rosterRes.loots){
-          if(loot.vehicle_id === loot.id){
-            build[armorLookup[loot.type]] = {sprite: loot.sprite, bonus: loot.modifier, patron: loot.user_id, name: loot.name};
-          }
-        }
-        return build;
-      })
+      console.log('new drivers',newDrivers);
       setRoster(newRoster);
+      setDrivers(newDrivers);
     }).catch(err => {
       console.log(err);
     });

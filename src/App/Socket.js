@@ -11,10 +11,10 @@ class Socket {
   }
   login = (id) => {
     cookies.set('id', id);
-    this.socket = io('http://6e8733a1.ngrok.io');
+    this.socket = io('http://46ff7fc8.ngrok.io');
     this.socketState = null;
     this.socket.on ('shunt', (data) => {
-      this.socketState = io(`http://6e8733a1.ngrok.io/${data.namespace}`);
+      this.socketState = io(`http://46ff7fc8.ngrok.io/${data.namespace}`);
       this.bus = data.busId;
       this.socket.emit('join', {id: cookies.get('id'), busId: this.bus});
     });
