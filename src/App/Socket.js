@@ -16,12 +16,6 @@ class Socket {
     this.socket.on ('shunt', (data) => {
       this.socketState = io(`http://46ff7fc8.ngrok.io/${data.namespace}`);
       this.bus = data.busId;
-      this.socket.emit('join', {id: cookies.get('id'), busId: this.bus});
-    });
-    setInterval(this.update, 2000);
-  }
-  update = () => {
-    if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((res) => {
         if(this.socketState){
           this.socketState.emit ('update', {id: cookies.get('id'), busId:  this.bus, coords: res.coords});
